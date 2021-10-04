@@ -14,9 +14,9 @@ import javax.persistence.Id;
 public class Artista {
     @Id
     @GeneratedValue
-    private Long id;
+    private Long Id;
 
-    private String nombre;
+    private String Nombre;
 
 
 }
