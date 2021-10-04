@@ -1,4 +1,4 @@
-package com.salesianostriana.Proyecto01;
+package com.salesianostriana.Proyecto01.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +24,6 @@ public class Playlist {
     private String Descripcion;
 
     @ManyToOne
-    private List<Canciones> Canciones;
+    private List<com.salesianostriana.Proyecto01.model.Canciones> Canciones;
 
 }

@@ -1,4 +1,4 @@
-package com.salesianostriana.Proyecto01;
+package com.salesianostriana.Proyecto01.model;
 
 
 import lombok.Data;

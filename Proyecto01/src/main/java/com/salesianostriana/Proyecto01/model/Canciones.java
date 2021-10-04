@@ -1,6 +1,7 @@
-package com.salesianostriana.Proyecto01;
+package com.salesianostriana.Proyecto01.model;
 
 
+import com.salesianostriana.Proyecto01.model.Artista;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,7 +27,7 @@ public class Canciones {
 
     private String Anyo;
 
-    public Canciones(String titulo, com.salesianostriana.Proyecto01.Artista artista, String album, String anyo) {
+    public Canciones(String titulo, com.salesianostriana.Proyecto01.model.Artista artista, String album, String anyo) {
         Titulo = titulo;
         Artista = artista;
         Album = album;
