@@ -16,21 +16,21 @@ import javax.persistence.ManyToOne;
 public class Canciones {
     @Id
     @GeneratedValue
-    private Long Id;
+    private Long id;
 
-    private String Titulo;
+    private String titulo;
 
     @ManyToOne
-    private Artista Artista;
+    private Artista artista;
 
-    private String Album;
+    private String album;
 
-    private String Anyo;
+    private String anyo;
 
-    public Canciones(String titulo, com.salesianostriana.Proyecto01.model.Artista artista, String album, String anyo) {
-        Titulo = titulo;
-        Artista = artista;
-        Album = album;
-        Anyo = anyo;
+    public Canciones(String titulo, Artista artista, String album, String anyo) {
+        this.titulo = titulo;
+        this.artista = artista;
+        this.album = album;
+        this.anyo = anyo;
     }
 }

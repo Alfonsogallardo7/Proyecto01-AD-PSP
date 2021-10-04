@@ -17,13 +17,17 @@ public class Playlist {
 
     @Id
     @GeneratedValue
-    private Long Id;
+    private Long id;
 
-    private String Nombre;
+    private String nombre;
 
-    private String Descripcion;
+    private String descripcion;
 
     @ManyToOne
-    private List<com.salesianostriana.Proyecto01.model.Canciones> Canciones;
+    private List<Canciones> canciones;
 
+    public Playlist(String nombre, String descripcion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
 }
