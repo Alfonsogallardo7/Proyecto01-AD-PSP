@@ -1,6 +1,7 @@
 package com.salesianostriana.Proyecto01.controller;
 
 import com.salesianostriana.Proyecto01.dto.CancionesDtoConverter;
+import com.salesianostriana.Proyecto01.dto.GetCancionesDto;
 import com.salesianostriana.Proyecto01.dto.CreateCancionesDto;
 import com.salesianostriana.Proyecto01.model.Artista;
 import com.salesianostriana.Proyecto01.model.Canciones;
@@ -10,8 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,11 +23,18 @@ public class CancionesController {
     private final CancionesDtoConverter dtoConverter;
     private final ArtistaRepository artistaRepository;
 
+
     @GetMapping("/")
-    public ResponseEntity<List<Canciones>> findAll(){
-        return  ResponseEntity
-                .ok()
-                .body(crepository.findAll());
+    public ResponseEntity<List<GetCancionesDto>> findAll(){
+        List<Canciones> data = crepository.findAll();
+        if(data.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }else{
+            List<GetCancionesDto> resultado=
+                    data.stream().map(dtoConverter::cancionesToGetCancionesDto)
+                            .collect(Collectors.toList());
+            return ResponseEntity.ok().body(resultado);
+        }
     }
 
     @PostMapping("/")
@@ -44,6 +52,7 @@ public class CancionesController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(crepository.save(nuevo));
+
     }
 
     @GetMapping("/{id}")
