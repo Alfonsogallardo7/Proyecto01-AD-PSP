@@ -12,6 +12,7 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 public class Artista {
+
     @Id
     @GeneratedValue
     private Long Id;
