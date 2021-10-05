@@ -12,7 +12,5 @@ public class CreateCancionesDto {
 
     private String album;
 
-    private Artista artista;
-
     private String anyo;
 }

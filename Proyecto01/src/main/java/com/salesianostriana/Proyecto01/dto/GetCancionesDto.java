@@ -16,8 +16,6 @@ public class GetCancionesDto {
 
         private String album;
 
-        private Artista artista;
-
         private String anyo;
     }
 

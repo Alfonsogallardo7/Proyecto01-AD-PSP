@@ -18,20 +18,7 @@ public class CancionesController {
 
     private final CancionesRepository Crepository;
     private final CancionesDtoConverter DtoConverter;
-
-
-    @GetMapping("/")
-    public ResponseEntity<List<GetCancionesDto>> findAll(){
-        List<Canciones> data = Crepository.findAll();
-       if(data.isEmpty()){
-           return ResponseEntity.notFound().build();
-       }else{
-           List<GetCancionesDto> resultado=
-                   data.stream().map(DtoConverter::cancionesToGetCancionesDto)
-                   .collect(Collectors.toList());
-           return ResponseEntity.ok().body(resultado);
-       }
-    }
+    
 
     @GetMapping("/{id}")
     public ResponseEntity<Canciones> findOne(@PathVariable Long id) {
