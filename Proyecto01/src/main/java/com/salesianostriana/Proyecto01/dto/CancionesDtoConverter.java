@@ -8,7 +8,6 @@ public class CancionesDtoConverter {
     public Canciones createCancionesDtoToCanciones(CreateCancionesDto c){
         return new Canciones(
                      c.getTitulo(),
-                     c.getArtista(),
                      c.getAlbum(),
                      c.getAnyo()
         );

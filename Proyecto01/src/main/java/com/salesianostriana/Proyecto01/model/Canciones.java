@@ -27,11 +27,9 @@ public class Canciones {
 
     private String anyo;
 
-    public Canciones(String titulo, Artista artista, String album, String anyo) {
+    public Canciones(String titulo, String album, String anyo) {
         this.titulo = titulo;
-        this.artista = artista;
         this.album = album;
         this.anyo = anyo;
     }
-
 }
