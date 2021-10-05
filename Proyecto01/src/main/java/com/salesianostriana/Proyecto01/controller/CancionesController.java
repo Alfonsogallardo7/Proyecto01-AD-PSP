@@ -11,14 +11,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/canciones")
 public class CancionesController {
 
-    private final CancionesRepository Crepository;
+    private final CancionesRepository crepository;
     private final CancionesDtoConverter dtoConverter;
     private final ArtistaRepository artistaRepository;
+
+    @GetMapping("/")
+    public ResponseEntity<List<Canciones>> findAll(){
+        return  ResponseEntity
+                .ok()
+                .body(crepository.findAll());
+    }
 
     @PostMapping("/")
     public ResponseEntity <Canciones> create (@RequestBody CreateCancionesDto dto) {
@@ -34,20 +43,34 @@ public class CancionesController {
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(Crepository.save(nuevo));
+                .body(crepository.save(nuevo));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Canciones> findOne(@PathVariable Long id) {
 
 
-        return ResponseEntity.of(Crepository.findById(id));
+        return ResponseEntity.of(crepository.findById(id));
 
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Canciones> edit(@RequestBody Canciones can,@PathVariable Long id){
+        return ResponseEntity.of(
+                crepository.findById(id).map(a ->{
+                    a.setAlbum(can.getAlbum());
+                    a.setAnyo(can.getAnyo());
+                    a.setTitulo(can.getTitulo());
+                    a.setArtista(can.getArtista());
+                    crepository.save(a);
+                    return a;
+                })
+        );
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        Crepository.deleteById(id);
+        crepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
