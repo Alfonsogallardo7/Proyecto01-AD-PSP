@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/canciones")
 public class CancionesController {
 
-    private final CancionesRepository crepository;
+    private final CancionesRepository Crepository;
 
     @GetMapping("/{id}")
     public ResponseEntity<Canciones> findOne(@PathVariable Long id) {
 
 
-        return ResponseEntity.of(crepository.findById(id));
+        return ResponseEntity.of(Crepository.findById(id));
 
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        crepository.deleteById(id);
+        Crepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
