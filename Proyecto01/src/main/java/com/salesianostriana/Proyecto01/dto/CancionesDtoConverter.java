@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 public class CancionesDtoConverter {
     public Canciones createCancionesDtoToCanciones(CreateCancionesDto c) {
         return new Canciones(
-                c.getTitulo(),
-                c.getAlbum(),
-                c.getAnyo()
+                     c.getTitulo(),
+                     c.getAlbum(),
+                     c.getAnyo()
         );
     }
     public GetCancionesDto cancionesToGetCancionesDto(Canciones c) {
