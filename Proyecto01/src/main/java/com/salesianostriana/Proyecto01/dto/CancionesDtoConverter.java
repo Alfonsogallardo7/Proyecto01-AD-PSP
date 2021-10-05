@@ -12,4 +12,11 @@ public class CancionesDtoConverter {
                 c.getAnyo()
         );
     }
+    public GetCancionesDto cancionesToGetCancionesDto(Canciones c) {
+        return GetCancionesDto
+                .builder().album(c.getAlbum())
+                .anyo(c.getAnyo())
+                .titulo(c.getTitulo())
+                .build();
+    }
 }
