@@ -12,11 +12,12 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 public class Artista {
+
     @Id
     @GeneratedValue
-    private Long id;
+    private Long Id;
 
-    private String nombre;
+    private String Nombre;
 
 
 }
