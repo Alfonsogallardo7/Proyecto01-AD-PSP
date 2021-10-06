@@ -16,4 +16,6 @@ public class GetPlaylistDto {
     private String descripcion;
 
     private String canciones;
+
+
 }

@@ -12,4 +12,10 @@ public class PlaylistDtoConverter {
                 c.getDescripcion()
         );
     }
+    public GetPlaylistDto playlistToGetPlaylistDto(Playlist p) {
+        return GetPlaylistDto
+                .builder().nombre(p.getNombre())
+                .descripcion(p.getDescripcion())
+                .build();
+    }
 }
