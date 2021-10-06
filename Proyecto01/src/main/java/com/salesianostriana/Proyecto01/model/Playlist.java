@@ -3,11 +3,7 @@ package com.salesianostriana.Proyecto01.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import java.util.List;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -24,7 +20,7 @@ public class Playlist {
     private String descripcion;
 
     @ManyToOne
-    private Canciones canciones;
+    private Cancion cancion;
 
     public Playlist(String nombre, String descripcion) {
         this.nombre = nombre;

@@ -6,13 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor
-public class    CreateCancionesDto {
+public class CreateCancionDto {
 
     private String titulo;
 
     private String album;
 
-    private Long artistaid;
+    private Long artistaId;
 
     private String anyo;
 }

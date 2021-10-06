@@ -1,12 +1,10 @@
 package com.salesianostriana.Proyecto01.controller;
 
-import com.salesianostriana.Proyecto01.dto.CreateCancionesDto;
 import com.salesianostriana.Proyecto01.dto.CreatePlaylistDto;
-import com.salesianostriana.Proyecto01.dto.GetPlaylistDto;
 import com.salesianostriana.Proyecto01.dto.PlaylistDtoConverter;
-import com.salesianostriana.Proyecto01.model.Canciones;
+import com.salesianostriana.Proyecto01.model.Cancion;
 import com.salesianostriana.Proyecto01.model.Playlist;
-import com.salesianostriana.Proyecto01.repository.CancionesRepository;
+import com.salesianostriana.Proyecto01.repository.CancionRepository;
 import com.salesianostriana.Proyecto01.repository.PlaylistRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +21,7 @@ public class PlayListController {
 
     private final PlaylistRepository playlistRepository;
     private final PlaylistDtoConverter dtoConverter;
-    private final CancionesRepository cancionesRepository;
+    private final CancionRepository cancionRepository;
 
     @GetMapping("/")
     public ResponseEntity<List<Playlist>> findAll(){
@@ -31,18 +29,15 @@ public class PlayListController {
         if (data.isEmpty()) {
             return ResponseEntity.notFound().build();
         }else {
-
             return ResponseEntity.
                     ok()
                     .body(playlistRepository.findAll());
         }
-
     }
-
     @PostMapping("/")
     public ResponseEntity <Playlist> create(@RequestBody CreatePlaylistDto dto) {
 
-        if (dto.getCancionesId() == null) {
+        if (dto.getCancionId() == null) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -59,12 +54,13 @@ public class PlayListController {
 
             return ResponseEntity.of(playlistRepository.findById(id));
     }
+    @PutMapping("/{id}")
 
     public ResponseEntity<Playlist> addSong(@RequestBody CreatePlaylistDto dto, @PathVariable Long id1, Long id2){
 
             return ResponseEntity.of(
                     playlistRepository.findById(id1).map(a->{
-                        a.setCanciones(cancionesRepository.getById(id2));
+                        a.setCancion(cancionRepository.getById(id2));
                         playlistRepository.save(a);
                         return a;
                     })
@@ -75,12 +71,11 @@ public class PlayListController {
 
     public ResponseEntity<Playlist> edit(@RequestBody Playlist playlist, @PathVariable Long id){
 
-
         return ResponseEntity.of(
                 playlistRepository.findById(id).map(a->{
                     a.setDescripcion(playlist.getDescripcion());
                     a.setNombre(playlist.getNombre());
-                    a.setCanciones(playlist.getCanciones());
+                    a.setCancion(playlist.getCancion());
                     playlistRepository.save(a);
                     return a;
                 })

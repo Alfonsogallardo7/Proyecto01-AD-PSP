@@ -1,12 +1,12 @@
 package com.salesianostriana.Proyecto01.controller;
 
-import com.salesianostriana.Proyecto01.dto.CancionesDtoConverter;
-import com.salesianostriana.Proyecto01.dto.GetCancionesDto;
-import com.salesianostriana.Proyecto01.dto.CreateCancionesDto;
+import com.salesianostriana.Proyecto01.dto.CancionDtoConverter;
+import com.salesianostriana.Proyecto01.dto.GetCancionDto;
+import com.salesianostriana.Proyecto01.dto.CreateCancionDto;
 import com.salesianostriana.Proyecto01.model.Artista;
-import com.salesianostriana.Proyecto01.model.Canciones;
+import com.salesianostriana.Proyecto01.model.Cancion;
 import com.salesianostriana.Proyecto01.repository.ArtistaRepository;
-import com.salesianostriana.Proyecto01.repository.CancionesRepository;
+import com.salesianostriana.Proyecto01.repository.CancionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,36 +16,36 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/canciones")
-public class CancionesController {
+@RequestMapping("/cancion")
+public class CancionController {
 
-    private final CancionesRepository crepository;
-    private final CancionesDtoConverter dtoConverter;
+    private final CancionRepository crepository;
+    private final CancionDtoConverter dtoConverter;
     private final ArtistaRepository artistaRepository;
 
 
     @GetMapping("/")
-    public ResponseEntity<List<GetCancionesDto>> findAll(){
-        List<Canciones> data = crepository.findAll();
+    public ResponseEntity<List<GetCancionDto>> findAll(){
+        List<Cancion> data = crepository.findAll();
         if(data.isEmpty()){
             return ResponseEntity.notFound().build();
         }else{
-            List<GetCancionesDto> resultado=
-                    data.stream().map(dtoConverter::cancionesToGetCancionesDto)
+            List<GetCancionDto> resultado=
+                    data.stream().map(dtoConverter::cancionToGetCancionesDto)
                             .collect(Collectors.toList());
             return ResponseEntity.ok().body(resultado);
         }
     }
 
     @PostMapping("/")
-    public ResponseEntity <Canciones> create (@RequestBody CreateCancionesDto dto) {
-        if (dto.getArtistaid() ==null) {
+    public ResponseEntity <Cancion> create (@RequestBody CreateCancionDto dto) {
+        if (dto.getArtistaId() ==null) {
             return ResponseEntity.badRequest().build();
         }
 
-        Canciones nuevo = dtoConverter.createCancionesDtoToCanciones(dto);
+        Cancion nuevo = dtoConverter.createCancionDtoToCanciones(dto);
 
-        Artista artista = artistaRepository.findById(dto.getArtistaid()).orElse(null);
+        Artista artista = artistaRepository.findById(dto.getArtistaId()).orElse(null);
 
         nuevo.setArtista(artista);
 
@@ -56,7 +56,7 @@ public class CancionesController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Canciones> findOne(@PathVariable Long id) {
+    public ResponseEntity<Cancion> findOne(@PathVariable Long id) {
 
 
         return ResponseEntity.of(crepository.findById(id));
@@ -66,7 +66,7 @@ public class CancionesController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Canciones> edit(@RequestBody Canciones can,@PathVariable Long id){
+    public ResponseEntity<Cancion> edit(@RequestBody Cancion can, @PathVariable Long id){
         return ResponseEntity.of(
                 crepository.findById(id).map(a ->{
                     a.setAlbum(can.getAlbum());
