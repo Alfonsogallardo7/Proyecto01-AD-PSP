@@ -24,7 +24,7 @@ public class Playlist {
     private String descripcion;
 
     @ManyToOne
-    private List<Canciones> canciones;
+    private Canciones canciones;
 
     public Playlist(String nombre, String descripcion) {
         this.nombre = nombre;
