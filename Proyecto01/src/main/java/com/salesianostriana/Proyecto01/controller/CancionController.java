@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/canciones")
+@RequestMapping("/cancion")
 public class CancionController {
 
     private final CancionRepository crepository;
@@ -39,13 +39,13 @@ public class CancionController {
 
     @PostMapping("/")
     public ResponseEntity <Cancion> create (@RequestBody CreateCancionDto dto) {
-        if (dto.getArtistaid() ==null) {
+        if (dto.getArtistaId() ==null) {
             return ResponseEntity.badRequest().build();
         }
 
         Cancion nuevo = dtoConverter.createCancionDtoToCanciones(dto);
 
-        Artista artista = artistaRepository.findById(dto.getArtistaid()).orElse(null);
+        Artista artista = artistaRepository.findById(dto.getArtistaId()).orElse(null);
 
         nuevo.setArtista(artista);
 

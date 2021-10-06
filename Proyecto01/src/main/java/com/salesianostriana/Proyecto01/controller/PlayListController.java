@@ -35,7 +35,7 @@ public class PlayListController {
     @PostMapping("/")
     public ResponseEntity <Playlist> create(@RequestBody CreatePlaylistDto dto) {
 
-        if (dto.getCancionesId() == null) {
+        if (dto.getCancionId() == null) {
             return ResponseEntity.badRequest().build();
         }
 
