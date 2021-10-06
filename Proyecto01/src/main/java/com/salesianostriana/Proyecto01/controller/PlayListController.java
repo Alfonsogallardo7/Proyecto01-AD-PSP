@@ -2,6 +2,7 @@ package com.salesianostriana.Proyecto01.controller;
 
 import com.salesianostriana.Proyecto01.dto.CreatePlaylistDto;
 import com.salesianostriana.Proyecto01.dto.PlaylistDtoConverter;
+import com.salesianostriana.Proyecto01.model.Cancion;
 import com.salesianostriana.Proyecto01.model.Playlist;
 import com.salesianostriana.Proyecto01.repository.CancionRepository;
 import com.salesianostriana.Proyecto01.repository.PlaylistRepository;
@@ -52,9 +53,8 @@ public class PlayListController {
 
             return ResponseEntity.of(playlistRepository.findById(id));
     }
-
+    @PutMapping("/{id}")
     public ResponseEntity<Playlist> edit(@RequestBody Playlist playlist, @PathVariable Long id){
-
 
         return ResponseEntity.of(
                 playlistRepository.findById(id).map(a->{
