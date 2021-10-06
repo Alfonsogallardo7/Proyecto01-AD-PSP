@@ -5,21 +5,17 @@ import com.salesianostriana.Proyecto01.model.Artista;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 @Data
 @NoArgsConstructor
-public class Canciones {
+public class Cancion {
     @Id
     @GeneratedValue
     private Long id;
 
     private String titulo;
-
     @ManyToOne
     private Artista artista;
 
@@ -27,7 +23,7 @@ public class Canciones {
 
     private String anyo;
 
-    public Canciones(String titulo, String album, String anyo) {
+    public Cancion(String titulo, String album, String anyo) {
         this.titulo = titulo;
         this.album = album;
         this.anyo = anyo;

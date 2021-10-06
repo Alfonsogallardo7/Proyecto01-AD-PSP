@@ -1,6 +1,5 @@
 package com.salesianostriana.Proyecto01.dto;
 
-import com.salesianostriana.Proyecto01.model.Canciones;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

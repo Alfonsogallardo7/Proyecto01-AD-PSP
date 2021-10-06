@@ -1,12 +1,9 @@
 package com.salesianostriana.Proyecto01.controller;
 
-import com.salesianostriana.Proyecto01.dto.CreateCancionesDto;
 import com.salesianostriana.Proyecto01.dto.CreatePlaylistDto;
-import com.salesianostriana.Proyecto01.dto.GetPlaylistDto;
 import com.salesianostriana.Proyecto01.dto.PlaylistDtoConverter;
-import com.salesianostriana.Proyecto01.model.Canciones;
 import com.salesianostriana.Proyecto01.model.Playlist;
-import com.salesianostriana.Proyecto01.repository.CancionesRepository;
+import com.salesianostriana.Proyecto01.repository.CancionRepository;
 import com.salesianostriana.Proyecto01.repository.PlaylistRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,7 +19,7 @@ public class PlayListController {
 
     private final PlaylistRepository playlistRepository;
     private final PlaylistDtoConverter dtoConverter;
-    private final CancionesRepository cancionesRepository;
+    private final CancionRepository cancionRepository;
 
     @GetMapping("/")
     public ResponseEntity<List<Playlist>> findAll(){
@@ -31,14 +27,11 @@ public class PlayListController {
         if (data.isEmpty()) {
             return ResponseEntity.notFound().build();
         }else {
-
             return ResponseEntity.
                     ok()
                     .body(playlistRepository.findAll());
         }
-
     }
-
     @PostMapping("/")
     public ResponseEntity <Playlist> create(@RequestBody CreatePlaylistDto dto) {
 
@@ -67,7 +60,7 @@ public class PlayListController {
                 playlistRepository.findById(id).map(a->{
                     a.setDescripcion(playlist.getDescripcion());
                     a.setNombre(playlist.getNombre());
-                    a.setCanciones(playlist.getCanciones());
+                    a.setCancion(playlist.getCancion());
                     playlistRepository.save(a);
                     return a;
                 })
