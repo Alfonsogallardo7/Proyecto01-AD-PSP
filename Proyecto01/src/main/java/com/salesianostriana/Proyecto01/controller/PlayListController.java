@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -54,6 +55,20 @@ public class PlayListController {
             return ResponseEntity.of(playlistRepository.findById(id));
     }
     @PutMapping("/{id}")
+
+    public ResponseEntity<Playlist> addSong(@RequestBody CreatePlaylistDto dto, @PathVariable Long id1, Long id2){
+
+            return ResponseEntity.of(
+                    playlistRepository.findById(id1).map(a->{
+                        a.setCancion(cancionRepository.getById(id2));
+                        playlistRepository.save(a);
+                        return a;
+                    })
+            );
+
+        }
+
+
     public ResponseEntity<Playlist> edit(@RequestBody Playlist playlist, @PathVariable Long id){
 
         return ResponseEntity.of(
