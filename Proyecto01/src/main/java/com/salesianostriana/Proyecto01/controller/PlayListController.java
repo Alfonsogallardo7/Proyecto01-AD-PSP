@@ -54,7 +54,7 @@ public class PlayListController {
 
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public ResponseEntity<Playlist> findOne(@PathVariable Long id){
 
             return ResponseEntity.of(playlistRepository.findById(id));
