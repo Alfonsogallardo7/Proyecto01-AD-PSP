@@ -20,7 +20,7 @@ public class Playlist {
 
     private String descripcion;
 
-    @ManyToOne (fetch = FetchType.EAGER)
+    @ManyToOne
     private Canciones canciones;
 
     public Playlist(String nombre, String descripcion) {

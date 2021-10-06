@@ -36,13 +36,13 @@ public class ArtistaController {
     public ResponseEntity<Artista> create(@RequestBody Artista nuevoArtista){
 
 
-        /*if (nuevoArtista.getId() == null) {
+        if (nuevoArtista.getNombre() ==null ){
             return ResponseEntity.badRequest().build();
-        }*/
+        }else {
             return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .body(repository.save(nuevoArtista));
-
+        }
     }
 
     @PutMapping("/{id}")
