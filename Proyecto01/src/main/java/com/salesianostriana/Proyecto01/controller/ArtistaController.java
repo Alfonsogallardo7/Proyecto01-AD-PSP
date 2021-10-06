@@ -34,9 +34,15 @@ public class ArtistaController {
 
     @PostMapping("/")
     public ResponseEntity<Artista> create(@RequestBody Artista nuevoArtista){
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(repository.save(nuevoArtista));
+
+
+        if (nuevoArtista.getNombre() ==null ){
+            return ResponseEntity.badRequest().build();
+        }else {
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(repository.save(nuevoArtista));
+        }
     }
 
     @PutMapping("/{id}")
