@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Canciones {
+public class Cancion {
     @Id
     @GeneratedValue
     private Long id;
@@ -26,7 +26,7 @@ public class Canciones {
 
     private String anyo;
 
-    public Canciones(String titulo, String album, String anyo) {
+    public Cancion(String titulo, String album, String anyo) {
         this.titulo = titulo;
         this.album = album;
         this.anyo = anyo;

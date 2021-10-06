@@ -1,19 +1,19 @@
 package com.salesianostriana.Proyecto01.dto;
 
-import com.salesianostriana.Proyecto01.model.Canciones;
+import com.salesianostriana.Proyecto01.model.Cancion;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CancionesDtoConverter {
-    public Canciones createCancionesDtoToCanciones(CreateCancionesDto c) {
-        return new Canciones(
+public class CancionDtoConverter {
+    public Cancion createCancionDtoToCanciones(CreateCancionDto c) {
+        return new Cancion(
                      c.getTitulo(),
                      c.getAlbum(),
                      c.getAnyo()
         );
     }
-    public GetCancionesDto cancionesToGetCancionesDto(Canciones c) {
-        return GetCancionesDto
+    public GetCancionDto cancionToGetCancionesDto(Cancion c) {
+        return GetCancionDto
                 .builder().album(c.getAlbum())
                 .anyo(c.getAnyo())
                 .titulo(c.getTitulo())

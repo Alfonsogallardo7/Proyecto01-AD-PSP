@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Data
@@ -21,7 +20,7 @@ public class Playlist {
     private String descripcion;
 
     @ManyToOne
-    private Canciones canciones;
+    private Cancion cancion;
 
     public Playlist(String nombre, String descripcion) {
         this.nombre = nombre;
