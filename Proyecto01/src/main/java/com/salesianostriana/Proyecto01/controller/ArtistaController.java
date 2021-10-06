@@ -20,9 +20,16 @@ public class ArtistaController {
 
     @GetMapping("/")
     public ResponseEntity<List<Artista>> findAll(){
-        return ResponseEntity
-                .ok()
-                .body(repository.findAll());
+
+        List<Artista> lista = repository.findAll();
+
+        if (lista.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity
+                    .ok()
+                    .body(lista);
+        }
 
     }
 
