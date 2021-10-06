@@ -1,10 +1,7 @@
 package com.salesianostriana.Proyecto01.controller;
 
-import com.salesianostriana.Proyecto01.dto.CreateCancionesDto;
 import com.salesianostriana.Proyecto01.dto.CreatePlaylistDto;
-import com.salesianostriana.Proyecto01.dto.GetPlaylistDto;
 import com.salesianostriana.Proyecto01.dto.PlaylistDtoConverter;
-import com.salesianostriana.Proyecto01.model.Canciones;
 import com.salesianostriana.Proyecto01.model.Playlist;
 import com.salesianostriana.Proyecto01.repository.CancionesRepository;
 import com.salesianostriana.Proyecto01.repository.PlaylistRepository;
@@ -14,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,6 +34,21 @@ public class PlayListController {
                     .body(playlistRepository.findAll());
         }
 
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Playlist> showOneWithSongs(@PathVariable Long id, @RequestBody CreatePlaylistDto dto){
+        Optional<Playlist> data = playlistRepository.findById(id);
+        if (data.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }else {
+            return ResponseEntity.of(
+                    data.map(a->{
+                        a.getCanciones();
+                        playlistRepository.save(a);
+                        return a;
+                    })
+            );
+        }
     }
 
     @PostMapping("/")
