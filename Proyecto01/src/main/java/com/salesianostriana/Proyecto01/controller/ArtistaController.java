@@ -6,6 +6,7 @@ import com.salesianostriana.Proyecto01.repository.ArtistaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,15 @@ public class ArtistaController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(Arepository.save(nuevoArtista));
+
+
+        if (nuevoArtista.getNombre() == null){
+            return ResponseEntity.badRequest().build();
+        }else {
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(Arepository.save(nuevoArtista));
+        }
     }
 
     @PutMapping("/{id}")
