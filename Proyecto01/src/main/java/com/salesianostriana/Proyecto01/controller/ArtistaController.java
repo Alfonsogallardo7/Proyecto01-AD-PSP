@@ -48,6 +48,13 @@ public class ArtistaController {
                 })
         );
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        repository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
 
 
 }
