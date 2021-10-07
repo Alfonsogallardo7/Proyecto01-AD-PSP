@@ -49,6 +49,8 @@ public class CancionController {
 
             nuevo.setArtista(artista.getNombre());
 
+            artista.addCancion(nuevo);
+
             return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .body(crepository.save(nuevo));

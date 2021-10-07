@@ -20,14 +20,19 @@ public class Artista {
 
     private String nombre;
 
-    @OneToMany(mappedBy = "artista")
+    @OneToMany
     private List<Cancion> canciones = new ArrayList<>();
 
+    public void addCancion(Cancion c){
+        canciones.add(c);
+    }
+
     @PreRemove
-    private void preRemove() {
-        for (Cancion c : canciones) {
+    public void setArtistNull(){
+        for(Cancion c: canciones){
             c.setArtista(null);
         }
     }
+
 
 }

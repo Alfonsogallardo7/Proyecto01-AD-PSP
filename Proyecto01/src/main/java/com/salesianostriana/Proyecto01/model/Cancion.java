@@ -24,9 +24,7 @@ public class Cancion {
 
     private String titulo;
 
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Artista artista;
+    private String Artista;
 
     private String album;
 
