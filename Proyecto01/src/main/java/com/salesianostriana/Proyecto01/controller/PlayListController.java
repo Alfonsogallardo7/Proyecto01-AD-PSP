@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequiredArgsConstructor
@@ -55,37 +56,46 @@ public class PlayListController {
             return ResponseEntity.of(playlistRepository.findById(id));
     }
     @PutMapping("/{id}")
-
-    public ResponseEntity<Playlist> addSong(@RequestBody CreatePlaylistDto dto, @PathVariable Long id1, Long id2){
-
-            return ResponseEntity.of(
-                    playlistRepository.findById(id1).map(a->{
-                        a.setCancion(cancionRepository.getById(id2));
-                        playlistRepository.save(a);
-                        return a;
-                    })
-            );
-
-        }
-
-
     public ResponseEntity<Playlist> edit(@RequestBody Playlist playlist, @PathVariable Long id){
-
         return ResponseEntity.of(
                 playlistRepository.findById(id).map(a->{
                     a.setDescripcion(playlist.getDescripcion());
                     a.setNombre(playlist.getNombre());
-                    a.setCancion(playlist.getCancion());
+                    a.setCanciones(playlist.getCanciones());
                     playlistRepository.save(a);
                     return a;
                 })
         );
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         playlistRepository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/cancion/{id}")
+    public ResponseEntity<Stream<Cancion>> buscarCancionPlaylist(@PathVariable Long idplaylist, @PathVariable Long idcancion){
+        return ResponseEntity.of(playlistRepository.findById(idplaylist)
+                .map(m -> (m.getCanciones().stream().filter(song -> song.getId().equals(idcancion)))
+                ));
+
+    }
+    @PostMapping("/{idPlaylist}/cancion/{idCancion}")
+    public ResponseEntity<Playlist>
+    nuevacancionplaylist(@RequestBody Playlist playlist, @PathVariable Long idPlaylist,@PathVariable Long idCancion) {
+        if ((playlistRepository.findById(idPlaylist) == null) || (cancionRepository.findById(idCancion) == null)){
+            return ResponseEntity.badRequest().build();
+        }else {
+            Playlist playlist1 = playlistRepository.findById(idPlaylist).orElse(null);
+
+            Cancion cancion1 = cancionRepository.findById(idCancion).orElse(null);
+            playlist1.addCancion(cancion1);
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(playlistRepository.save(playlist1));
+
+        }
+
     }
 
 }

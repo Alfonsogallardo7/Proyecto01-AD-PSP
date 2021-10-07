@@ -8,7 +8,6 @@ import com.salesianostriana.Proyecto01.repository.CancionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +18,6 @@ import java.util.List;
 public class ArtistaController {
 
     private final ArtistaRepository Arepository;
-    private final CancionRepository Crepository;
 
     @GetMapping("/")
     public ResponseEntity<List<Artista>> findAll(){
@@ -59,7 +57,6 @@ public class ArtistaController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-
         Arepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }

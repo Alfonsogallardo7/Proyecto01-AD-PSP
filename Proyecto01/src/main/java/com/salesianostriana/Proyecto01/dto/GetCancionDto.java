@@ -16,6 +16,8 @@ public class GetCancionDto {
 
         private String album;
 
+        private Artista artista;
+
         private String anyo;
 
         private String nombreArtista;
