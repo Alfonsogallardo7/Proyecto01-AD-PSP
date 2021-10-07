@@ -10,9 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @RestController
@@ -35,6 +34,23 @@ public class PlayListController {
                     .body(playlistRepository.findAll());
         }
     }
+    /*
+    @GetMapping("/{id}")
+    public ResponseEntity<Playlist> showOneWithSongs(@PathVariable Long id, @RequestBody CreatePlaylistDto dto){
+        Optional<Playlist> data = playlistRepository.findById(id);
+        if (data.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }else {
+            return ResponseEntity.of(
+                    data.map(a->{
+                        a.getCanciones();
+                        playlistRepository.save(a);
+                        return a;
+                    })
+            );
+        }
+    }
+    */
     @PostMapping("/")
     public ResponseEntity <Playlist> create(@RequestBody CreatePlaylistDto dto) {
 
@@ -80,7 +96,7 @@ public class PlayListController {
                 ));
 
     }
-    @PostMapping("/{idPlaylist}/cancion/{idCancion}")
+    @PostMapping("/{idPlaylist}/songs/{idCancion}")
     public ResponseEntity<Playlist>
     nuevacancionplaylist(@RequestBody Playlist playlist, @PathVariable Long idPlaylist,@PathVariable Long idCancion) {
         if ((playlistRepository.findById(idPlaylist) == null) || (cancionRepository.findById(idCancion) == null)){
@@ -97,5 +113,27 @@ public class PlayListController {
         }
 
     }
+
+    @GetMapping("{id}/songs/")
+    public ResponseEntity<Stream<Cancion>> cancionesDePlaylist(@PathVariable Long id, @RequestBody Playlist playlist) {
+
+
+        if (playlistRepository.findById(id) == null) {
+            return ResponseEntity.badRequest().build();
+        } else {
+
+            return  ResponseEntity
+                    .ok()
+                    .body(playlist.getCanciones().stream().map(songs ->{
+                        songs.getTitulo();
+                        songs.getNombreArtista();
+                        songs.getAlbum();
+                        return songs;
+                    }));
+        }
+
+    }
+
+
 
 }
