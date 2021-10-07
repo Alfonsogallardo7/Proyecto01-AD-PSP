@@ -16,20 +16,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArtistaController {
 
-    private final ArtistaRepository Arepository;
+    private final ArtistaRepository repository;
 
     @GetMapping("/")
     public ResponseEntity<List<Artista>> findAll(){
         return ResponseEntity
                 .ok()
-                .body(Arepository.findAll());
-
+                .body(repository.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Artista> findOne(@PathVariable Long id){
         return ResponseEntity
-                .of(Arepository.findById(id));
+                .of(repository.findById(id));
     }
 
     @PostMapping("/")
@@ -40,25 +39,27 @@ public class ArtistaController {
         }else {
             return ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(Arepository.save(nuevoArtista));
+                    .body(repository.save(nuevoArtista));
         }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Artista> edit(@RequestBody Artista art,@PathVariable Long id){
         return ResponseEntity.of(
-                Arepository.findById(id).map(a ->{
+                repository.findById(id).map(a ->{
                     a.setNombre(art.getNombre());
-                    Arepository.save(a);
+                    repository.save(a);
                     return a;
                 })
         );
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        Arepository.deleteById(id);
+        repository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
 
 
 }
