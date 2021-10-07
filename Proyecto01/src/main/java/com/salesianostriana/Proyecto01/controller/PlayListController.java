@@ -73,7 +73,7 @@ public class PlayListController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{id}/cancion/{id}")
+    @GetMapping("/{id}/songs/{id}")
     public ResponseEntity<Stream<Cancion>> buscarCancionPlaylist(@PathVariable Long idplaylist, @PathVariable Long idcancion){
         return ResponseEntity.of(playlistRepository.findById(idplaylist)
                 .map(m -> (m.getCanciones().stream().filter(song -> song.getId().equals(idcancion)))

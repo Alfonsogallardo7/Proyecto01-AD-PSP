@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/cancion")
+@RequestMapping("/songs")
 public class CancionController {
 
     private final CancionRepository crepository;
