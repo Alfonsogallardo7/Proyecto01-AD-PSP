@@ -2,7 +2,9 @@ package com.salesianostriana.Proyecto01.controller;
 
 
 import com.salesianostriana.Proyecto01.model.Artista;
+import com.salesianostriana.Proyecto01.model.Cancion;
 import com.salesianostriana.Proyecto01.repository.ArtistaRepository;
+import com.salesianostriana.Proyecto01.repository.CancionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import java.util.List;
 public class ArtistaController {
 
     private final ArtistaRepository Arepository;
+    private final CancionRepository Crepository;
 
     @GetMapping("/")
     public ResponseEntity<List<Artista>> findAll(){
@@ -56,6 +59,7 @@ public class ArtistaController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
+
         Arepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }

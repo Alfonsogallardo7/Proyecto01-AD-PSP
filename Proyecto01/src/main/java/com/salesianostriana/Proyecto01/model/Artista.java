@@ -1,12 +1,13 @@
 package com.salesianostriana.Proyecto01.model;
 
 
+import com.salesianostriana.Proyecto01.dto.GetCancionDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -19,5 +20,14 @@ public class Artista {
 
     private String nombre;
 
+    @OneToMany(mappedBy = "artista")
+    private List<Cancion> canciones = new ArrayList<>();
+
+    @PreRemove
+    private void preRemove() {
+        for (Cancion c : canciones) {
+            c.setArtista(null);
+        }
+    }
 
 }
