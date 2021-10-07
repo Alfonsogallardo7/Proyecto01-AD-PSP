@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Entity
@@ -30,9 +31,12 @@ public class Artista {
 
     public void deleteCancion(Long id){
 
-        for(Cancion can : canciones){
-            if(can.getId()==id)
-                canciones.remove(can);
+        Iterator<Cancion> it = canciones.iterator();
+
+        while(it.hasNext()){
+            Cancion e=it.next();
+            if(id.equals(e.getId()))
+                it.remove();
         }
     }
 
