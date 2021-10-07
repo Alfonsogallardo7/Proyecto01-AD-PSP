@@ -34,6 +34,7 @@ public class PlayListController {
                     .body(playlistRepository.findAll());
         }
     }
+    /*
     @GetMapping("/{id}")
     public ResponseEntity<Playlist> showOneWithSongs(@PathVariable Long id, @RequestBody CreatePlaylistDto dto){
         Optional<Playlist> data = playlistRepository.findById(id);
@@ -49,7 +50,7 @@ public class PlayListController {
             );
         }
     }
-
+    */
     @PostMapping("/")
     public ResponseEntity <Playlist> create(@RequestBody CreatePlaylistDto dto) {
 
