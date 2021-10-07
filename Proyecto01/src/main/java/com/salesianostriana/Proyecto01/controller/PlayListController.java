@@ -55,22 +55,7 @@ public class PlayListController {
             return ResponseEntity.of(playlistRepository.findById(id));
     }
     @PutMapping("/{id}")
-
-    public ResponseEntity<Playlist> addSong(@RequestBody CreatePlaylistDto dto, @PathVariable Long id1, Long id2){
-
-            return ResponseEntity.of(
-                    playlistRepository.findById(id1).map(a->{
-                        a.setCancion(cancionRepository.getById(id2));
-                        playlistRepository.save(a);
-                        return a;
-                    })
-            );
-
-        }
-
-
     public ResponseEntity<Playlist> edit(@RequestBody Playlist playlist, @PathVariable Long id){
-
         return ResponseEntity.of(
                 playlistRepository.findById(id).map(a->{
                     a.setDescripcion(playlist.getDescripcion());
@@ -81,7 +66,6 @@ public class PlayListController {
                 })
         );
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         playlistRepository.deleteById(id);
