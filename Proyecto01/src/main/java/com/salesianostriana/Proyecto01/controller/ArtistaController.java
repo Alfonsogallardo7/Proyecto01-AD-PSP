@@ -24,7 +24,6 @@ public class ArtistaController {
                 .body(repository.findAll());
 
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<Artista> findOne(@PathVariable Long id){
         return ResponseEntity
