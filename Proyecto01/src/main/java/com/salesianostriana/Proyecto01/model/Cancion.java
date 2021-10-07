@@ -5,6 +5,7 @@ import com.salesianostriana.Proyecto01.model.Artista;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.bytebuddy.asm.TypeReferenceAdjustment;
 
 import javax.persistence.*;
 
@@ -14,7 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Cancion {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String titulo;
@@ -31,4 +32,5 @@ public class Cancion {
         this.album = album;
         this.anyo = anyo;
     }
+
 }

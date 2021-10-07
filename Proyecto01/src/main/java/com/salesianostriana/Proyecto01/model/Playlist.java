@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -12,18 +13,23 @@ import javax.persistence.*;
 public class Playlist {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nombre;
 
     private String descripcion;
 
-    @ManyToOne
-    private Cancion cancion;
+    @OneToMany
+    private List<Cancion> canciones;
 
     public Playlist(String nombre, String descripcion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
+    }
+
+    public void addCancion(Cancion c){
+        canciones.add(c);
+
     }
 }
