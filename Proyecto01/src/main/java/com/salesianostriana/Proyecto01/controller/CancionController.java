@@ -39,19 +39,22 @@ public class CancionController {
 
     @PostMapping("/")
     public ResponseEntity <Cancion> create (@RequestBody CreateCancionDto dto) {
-        if (dto.getArtistaId() ==null) {
+        if (dto.getArtistaId() == null) {
             return ResponseEntity.badRequest().build();
         }
+        else {
+            Artista artista = artistaRepository.findById(dto.getArtistaId()).orElse(null);
 
-        Cancion nuevo = dtoConverter.createCancionDtoToCanciones(dto);
+            Cancion nuevo = dtoConverter.createCancionDtoToCanciones(dto);
 
-        Artista artista = artistaRepository.findById(dto.getArtistaId()).orElse(null);
+            nuevo.setArtista(artista.getNombre());
 
-        nuevo.setArtista(artista);
+            artista.addCancion(nuevo);
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(crepository.save(nuevo));
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(crepository.save(nuevo));
+        }
 
     }
 

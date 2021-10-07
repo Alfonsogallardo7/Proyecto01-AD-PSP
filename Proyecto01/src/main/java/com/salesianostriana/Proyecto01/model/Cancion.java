@@ -5,6 +5,8 @@ import com.salesianostriana.Proyecto01.model.Artista;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -12,15 +14,17 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "cancion")
 public class Cancion {
     @Id
     @GeneratedValue
+    @Column(name = "id", nullable = false)
+
     private Long id;
 
     private String titulo;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Artista artista;
+    private String Artista;
 
     private String album;
 
