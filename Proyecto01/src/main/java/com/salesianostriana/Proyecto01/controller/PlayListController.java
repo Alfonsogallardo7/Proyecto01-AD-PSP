@@ -2,6 +2,7 @@ package com.salesianostriana.Proyecto01.controller;
 
 import com.salesianostriana.Proyecto01.dto.CreatePlaylistDto;
 import com.salesianostriana.Proyecto01.dto.PlaylistDtoConverter;
+import com.salesianostriana.Proyecto01.model.Cancion;
 import com.salesianostriana.Proyecto01.model.Playlist;
 import com.salesianostriana.Proyecto01.repository.CancionRepository;
 import com.salesianostriana.Proyecto01.repository.PlaylistRepository;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,7 +37,7 @@ public class PlayListController {
     @PostMapping("/")
     public ResponseEntity <Playlist> create(@RequestBody CreatePlaylistDto dto) {
 
-        if (dto.getCancionesId() == null) {
+        if (dto.getCancionId() == null) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -52,9 +54,22 @@ public class PlayListController {
 
             return ResponseEntity.of(playlistRepository.findById(id));
     }
+    @PutMapping("/{id}")
+
+    public ResponseEntity<Playlist> addSong(@RequestBody CreatePlaylistDto dto, @PathVariable Long id1, Long id2){
+
+            return ResponseEntity.of(
+                    playlistRepository.findById(id1).map(a->{
+                        a.setCancion(cancionRepository.getById(id2));
+                        playlistRepository.save(a);
+                        return a;
+                    })
+            );
+
+        }
+
 
     public ResponseEntity<Playlist> edit(@RequestBody Playlist playlist, @PathVariable Long id){
-
 
         return ResponseEntity.of(
                 playlistRepository.findById(id).map(a->{

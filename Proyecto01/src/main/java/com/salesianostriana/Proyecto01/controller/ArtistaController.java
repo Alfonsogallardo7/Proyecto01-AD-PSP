@@ -6,6 +6,7 @@ import com.salesianostriana.Proyecto01.repository.ArtistaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +23,6 @@ public class ArtistaController {
         return ResponseEntity
                 .ok()
                 .body(repository.findAll());
-
     }
     @GetMapping("/{id}")
     public ResponseEntity<Artista> findOne(@PathVariable Long id){
@@ -32,9 +32,14 @@ public class ArtistaController {
 
     @PostMapping("/")
     public ResponseEntity<Artista> create(@RequestBody Artista nuevoArtista){
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(repository.save(nuevoArtista));
+        
+        if (nuevoArtista.getNombre() == null){
+            return ResponseEntity.badRequest().build();
+        }else {
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(repository.save(nuevoArtista));
+        }
     }
 
     @PutMapping("/{id}")
@@ -47,12 +52,12 @@ public class ArtistaController {
                 })
         );
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
-
 
 
 
