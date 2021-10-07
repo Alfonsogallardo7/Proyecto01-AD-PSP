@@ -96,7 +96,7 @@ public class PlayListController {
                 ));
 
     }
-    @PostMapping("/{idPlaylist}/cancion/{idCancion}")
+    @PostMapping("/{idPlaylist}/songs/{idCancion}")
     public ResponseEntity<Playlist>
     nuevacancionplaylist(@RequestBody Playlist playlist, @PathVariable Long idPlaylist,@PathVariable Long idCancion) {
         if ((playlistRepository.findById(idPlaylist) == null) || (cancionRepository.findById(idCancion) == null)){
@@ -113,5 +113,24 @@ public class PlayListController {
         }
 
     }
+
+    @GetMapping("{id}/songs/")
+    public ResponseEntity<List<Cancion>> listarTodasCancionesPlaylist(@PathVariable Long id) {
+
+        Playlist playlist1 = playlistRepository.findById(id).orElse(null);
+        if (playlist1 == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+
+
+
+            return  ResponseEntity
+                    .ok()
+                    .body(playlist1.getCanciones());
+        }
+
+    }
+
+
 
 }
