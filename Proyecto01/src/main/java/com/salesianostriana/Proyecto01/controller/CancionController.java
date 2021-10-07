@@ -47,7 +47,7 @@ public class CancionController {
 
             Cancion nuevo = dtoConverter.createCancionDtoToCanciones(dto);
 
-            nuevo.setArtista(artista.getNombre());
+            nuevo.setNombreArtista(artista.getNombre());
 
             artista.addCancion(nuevo);
 
@@ -75,7 +75,7 @@ public class CancionController {
                     a.setAlbum(can.getAlbum());
                     a.setAnyo(can.getAnyo());
                     a.setTitulo(can.getTitulo());
-                    a.setArtista(can.getArtista());
+                    a.setNombreArtista(can.getNombreArtista());
                     crepository.save(a);
                     return a;
                 })
@@ -84,6 +84,7 @@ public class CancionController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
+
         crepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }

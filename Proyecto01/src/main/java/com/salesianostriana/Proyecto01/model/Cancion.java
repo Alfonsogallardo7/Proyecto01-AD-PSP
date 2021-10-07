@@ -19,7 +19,7 @@ public class Cancion {
 
     private String titulo;
 
-    private String Artista;
+    private String nombreArtista;
 
     private String album;
 

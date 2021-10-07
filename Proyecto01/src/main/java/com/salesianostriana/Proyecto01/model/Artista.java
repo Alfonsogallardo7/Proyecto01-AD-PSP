@@ -28,10 +28,18 @@ public class Artista {
         canciones.add(c);
     }
 
+    public void deleteCancion(Long id){
+
+        for(Cancion can : canciones){
+            if(can.getId()==id)
+                canciones.remove(can);
+        }
+    }
+
     @PreRemove
     public void setArtistNull(){
         for(Cancion c: canciones){
-            c.setArtista(null);
+            c.setNombreArtista(null);
         }
     }
 
