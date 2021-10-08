@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
@@ -63,12 +64,6 @@ public class PlayListController {
         }
     }
     */
-    @ApiOperation(value = "Get", notes = "este get devuelve todos los artistas que haya")
-    @ApiResponses({ @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
-            @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Error interno del servidor"),
-            @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "no autorizado"),
-            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Elemento no encontrado") })
-
     @PostMapping("/")
     public ResponseEntity <Playlist> create(@RequestBody CreatePlaylistDto dto) {
 

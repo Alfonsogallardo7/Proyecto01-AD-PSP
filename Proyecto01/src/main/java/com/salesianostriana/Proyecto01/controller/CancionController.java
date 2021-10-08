@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -116,7 +117,16 @@ public class CancionController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
+        Long idArtistaEncontrado;
 
+        List<Artista> artistas = artistaRepository.findAll();
+
+        for(Artista art : artistas){
+            if(art.getNombre().equals(crepository.getById(id).getNombreArtista()))
+                art.deleteCancion(id);
+            else
+                idArtistaEncontrado = null;
+        }
         crepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
