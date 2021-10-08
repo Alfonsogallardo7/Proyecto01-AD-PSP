@@ -165,7 +165,7 @@ public class PlayListController {
 
     }
 
-    @DeleteMapping("playlist/{idPlaylist}/songs/{idCancion}")
+    @DeleteMapping("{idPlaylist}/songs/{idCancion}")
     public ResponseEntity<?> removePlaylist(@PathVariable Long idPlaylist, @PathVariable Long idCancion){
 
         if(playlistRepository.getById(idPlaylist) != null){
