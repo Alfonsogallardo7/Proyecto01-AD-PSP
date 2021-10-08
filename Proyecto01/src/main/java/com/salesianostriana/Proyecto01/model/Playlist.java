@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Iterator;
 import java.util.List;
 
 @Entity
@@ -20,7 +21,7 @@ public class Playlist {
 
     private String descripcion;
 
-    @OneToMany
+    @ManyToMany
     private List<Cancion> canciones;
 
     public Playlist(String nombre, String descripcion) {
@@ -32,4 +33,16 @@ public class Playlist {
         canciones.add(c);
 
     }
+
+    public void deleteCancionPlaylist(Long id){
+
+        Iterator<Cancion> it = canciones.iterator();
+
+        while(it.hasNext()){
+            Cancion e=it.next();
+            if(id.equals(e.getId()))
+                it.remove();
+        }
+    }
+
 }

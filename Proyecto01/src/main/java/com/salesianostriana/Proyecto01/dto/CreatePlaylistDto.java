@@ -13,5 +13,4 @@ public class CreatePlaylistDto {
 
         private String descripcion;
 
-        private Long cancionId;
 }

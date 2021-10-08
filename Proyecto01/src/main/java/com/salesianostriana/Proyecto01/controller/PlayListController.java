@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @RestController
 @Api(tags = "PlayListController")
@@ -53,9 +52,6 @@ public class PlayListController {
     @PostMapping("/")
     public ResponseEntity <Playlist> create(@RequestBody CreatePlaylistDto dto) {
 
-        if (dto.getCancionId() == null) {
-            return ResponseEntity.badRequest().build();
-        }
 
         Playlist nuevo = dtoConverter.createPlaylistDtoToPlaylist(dto);
 
@@ -115,11 +111,8 @@ public class PlayListController {
             @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Elemento no encontrado") })
 
     @GetMapping("/{id}/songs/{id}")
-    public ResponseEntity<Stream<Cancion>> buscarCancionPlaylist(@PathVariable Long idplaylist, @PathVariable Long idcancion){
-        return ResponseEntity.of(playlistRepository.findById(idplaylist)
-                .map(m -> (m.getCanciones().stream().filter(song -> song.getId().equals(idcancion)))
-                ));
-
+    public ResponseEntity<Cancion> buscarCancionPlaylist(@PathVariable Long idplaylist, @PathVariable Long idcancion){
+        return ResponseEntity.of(cancionRepository.findById(idcancion));
     }
     @ApiOperation(value = "Get", notes = "este get devuelve todos los artistas que haya")
     @ApiResponses({ @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
@@ -135,6 +128,7 @@ public class PlayListController {
             Playlist playlist1 = playlistRepository.findById(idPlaylist).orElse(null);
 
             Cancion cancion1 = cancionRepository.findById(idCancion).orElse(null);
+
             playlist1.addCancion(cancion1);
             return ResponseEntity
                     .status(HttpStatus.CREATED)
@@ -171,6 +165,19 @@ public class PlayListController {
 
     }
 
+    @DeleteMapping("playlist/{idPlaylist}/songs/{idCancion}")
+    public ResponseEntity<?> removePlaylist(@PathVariable Long idPlaylist, @PathVariable Long idCancion){
+
+        if(playlistRepository.getById(idPlaylist) != null){
+            playlistRepository.getById(idPlaylist).deleteCancionPlaylist(idCancion);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+
+    }
 
 
 
