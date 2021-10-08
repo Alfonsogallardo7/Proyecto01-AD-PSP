@@ -163,12 +163,17 @@ public class PlayListController {
             @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Elemento no encontrado") })
 
     @GetMapping("{id}/songs/")
-    public ResponseEntity<Stream<Cancion>> cancionesDePlaylist(@PathVariable Long id, @RequestBody Playlist playlist) {
+       public ResponseEntity<List<Cancion>> listarTodasCancionesPlaylist(@PathVariable Long id) {
 
 
         if (playlistRepository.findById(id) == null) {
             return ResponseEntity.badRequest().build();
+        Playlist playlist1 = playlistRepository.findById(id).orElse(null);
+        if (playlist1 == null) {
+            return ResponseEntity.notFound().build();
         } else {
+
+
 
             return  ResponseEntity
                     .ok()
@@ -178,6 +183,7 @@ public class PlayListController {
                         songs.getAlbum();
                         return songs;
                     }));
+                    .body(playlist1.getCanciones());
         }
 
     }
