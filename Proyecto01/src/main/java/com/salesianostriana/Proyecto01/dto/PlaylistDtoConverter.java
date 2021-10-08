@@ -13,9 +13,10 @@ public class PlaylistDtoConverter {
         );
     }
     public GetPlaylistDto playlistToGetPlaylistDto(Playlist p) {
-        return GetPlaylistDto
-                .builder().nombre(p.getNombre())
-                .descripcion(p.getDescripcion())
-                .build();
+        GetPlaylistDto result = new GetPlaylistDto();
+        result.setNombre(p.getNombre());
+        result.setDescripcion(p.getDescripcion());
+        result.setCanciones(p.getCanciones().getTitulo());
+        return result;
     }
 }
