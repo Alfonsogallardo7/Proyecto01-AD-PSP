@@ -18,17 +18,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-@Api(tags = "ArtistaController")
+@Api(tags = "Los controladores de artista")
 @RequestMapping("/artist")
 @RequiredArgsConstructor
 public class ArtistaController {
 
     private final ArtistaRepository Arepository;
-    @ApiOperation(value = "Get", notes = "este get devuelve todos los artistas que haya")
-    @ApiResponses({ @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
-            @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Error interno del servidor"),
-            @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "no autorizado"),
-            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Elemento no encontrado") })
+    @ApiOperation(value = "Get", notes = "Devuelve una lista con todos los artistas")
+    @ApiResponses({
+            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Se a encontrado la lista de artistas"),
+            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "No se ha encontrado la lista de artistas") })
 
     @GetMapping("/")
     public ResponseEntity<List<Artista>> findAll(){
@@ -37,21 +36,19 @@ public class ArtistaController {
                 .body(Arepository.findAll());
 
     }
-    @ApiOperation(value = "Get2", notes = "devuelve los artistas por id")
-    @ApiResponses({ @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
-            @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "INTERNAL ERROR SERVER"),
-            @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "UNAUTHORIZED"),
-            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "ELEMENTO NOT FOUND") })
+    @ApiOperation(value = "Get", notes = "Devuelve el artista dependiendo del id que se le haya pasado")
+    @ApiResponses({
+            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Se a encontrado el artista"),
+            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "No se ha encontrado el artista") })
     @GetMapping("/{id}")
     public ResponseEntity<Artista> findOne(@PathVariable Long id){
         return ResponseEntity
                 .of(Arepository.findById(id));
     }
-    @ApiOperation(value = "Post", notes = "crear un artista")
-    @ApiResponses({ @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
-            @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "INTERNAL ERROR SERVER"),
-            @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "UNAUTHORIZED"),
-            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "ELEMENTO NOT FOUND") })
+    @ApiOperation(value = "Post", notes = "Crea un nuevo artista")
+    @ApiResponses({
+            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Se ha añadido el artista"),
+            @ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, message = "No se ha podido añadir el artista, algún errror en los datos") })
     @PostMapping("/")
     public ResponseEntity<Artista> create(@RequestBody Artista nuevoArtista){
         
@@ -63,11 +60,10 @@ public class ArtistaController {
                     .body(Arepository.save(nuevoArtista));
         }
     }
-    @ApiOperation(value = "Put", notes = "actualizas un artista")
-    @ApiResponses({ @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
-            @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "INTERNAL ERROR SERVER"),
-            @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "UNAUTHORIZED"),
-            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "ELEMENTO NOT FOUND") })
+    @ApiOperation(value = "Put", notes = "Modifica al artista seleccionado")
+    @ApiResponses({
+            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Se ha modificado correctamente el artista seleccionado"),
+            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "No se ha podido modificar, no existe el artista seleccionado") })
     @PutMapping("/{id}")
     public ResponseEntity<Artista> edit(@RequestBody Artista art,@PathVariable Long id){
         return ResponseEntity.of(
@@ -78,11 +74,9 @@ public class ArtistaController {
                 })
         );
     }
-    @ApiOperation(value = "Delete", notes = "borras un artista")
-    @ApiResponses({ @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
-            @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "INTERNAL ERROR SERVER"),
-            @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "UNAUTHORIZED"),
-            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "ELEMENTO NOT FOUND") })
+    @ApiOperation(value = "Delete", notes = "Borra el artista seleccionado, sin borrar las canciones")
+    @ApiResponses({
+            @ApiResponse(code = HttpServletResponse.SC_NO_CONTENT, message = "Se ha borrado correctamente")})
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         Arepository.deleteById(id);
