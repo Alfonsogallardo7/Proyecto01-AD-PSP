@@ -46,23 +46,9 @@ public class PlayListController {
                     .body(playlistRepository.findAll());
         }
     }
-    /*
-    @GetMapping("/{id}")
-    public ResponseEntity<Playlist> showOneWithSongs(@PathVariable Long id, @RequestBody CreatePlaylistDto dto){
-        Optional<Playlist> data = playlistRepository.findById(id);
-        if (data.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }else {
-            return ResponseEntity.of(
-                    data.map(a->{
-                        a.getCanciones();
-                        playlistRepository.save(a);
-                        return a;
-                    })
-            );
-        }
-    }
-    */
+
+
+
     @PostMapping("/")
     public ResponseEntity <Playlist> create(@RequestBody CreatePlaylistDto dto) {
 
@@ -77,6 +63,7 @@ public class PlayListController {
                 .body(playlistRepository.save(nuevo));
 
     }
+
     @ApiOperation(value = "Get", notes = "este get devuelve todos los artistas que haya")
     @ApiResponses({ @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
             @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Error interno del servidor"),
@@ -89,6 +76,8 @@ public class PlayListController {
 
             return ResponseEntity.of(playlistRepository.findById(id));
     }
+
+
     @ApiOperation(value = "Get", notes = "este get devuelve todos los artistas que haya")
     @ApiResponses({ @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
             @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Error interno del servidor"),
@@ -112,7 +101,6 @@ public class PlayListController {
             @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Error interno del servidor"),
             @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "no autorizado"),
             @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Elemento no encontrado") })
-        @ApiResponse(code = HttpServletResponse., message = "Elemento no encontrado") })
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
@@ -139,8 +127,7 @@ public class PlayListController {
             @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Elemento no encontrado") })
 
     @PostMapping("/{idPlaylist}/songs/{idCancion}")
-    public ResponseEntity<Playlist>
-    nuevacancionplaylist(@RequestBody Playlist playlist, @PathVariable Long idPlaylist,@PathVariable Long idCancion) {
+    public ResponseEntity<Playlist> nuevacancionplaylist(@PathVariable Long idPlaylist,@PathVariable Long idCancion) {
         if ((playlistRepository.findById(idPlaylist) == null) || (cancionRepository.findById(idCancion) == null)){
             return ResponseEntity.badRequest().build();
         }else {
@@ -163,27 +150,28 @@ public class PlayListController {
             @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Elemento no encontrado") })
 
     @GetMapping("{id}/songs/")
-       public ResponseEntity<List<Cancion>> listarTodasCancionesPlaylist(@PathVariable Long id) {
+    public ResponseEntity<List<Cancion>> listarTodasCancionesPlaylist(@PathVariable Long id) {
 
+        Optional<Playlist> playlistBuscada = playlistRepository.findById(id);
 
-        if (playlistRepository.findById(id) == null) {
-            return ResponseEntity.badRequest().build();
-        Playlist playlist1 = playlistRepository.findById(id).orElse(null);
-        if (playlist1 == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity
+        if ( playlistBuscada != null) {
+            return ResponseEntity.ok().body(playlistBuscada.get().getCanciones());
+
+        }
+        else {
+
+            return  ResponseEntity
                     .ok()
-                    .body(playlist1.getCanciones().stream().map(songs -> {
-                        songs.getTitulo();
-                        songs.getArtist().getNombre();
-                        songs.getAlbum();
-                        return songs;
-                    }));
+                    .body(playlistBuscada.get().getCanciones());
+
         }
 
 
+
     }
+
+
+
 
 
 
