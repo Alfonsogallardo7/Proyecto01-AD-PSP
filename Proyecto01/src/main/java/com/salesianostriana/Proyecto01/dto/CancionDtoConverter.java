@@ -17,7 +17,7 @@ public class CancionDtoConverter {
                 .builder().album(c.getAlbum())
                 .anyo(c.getAnyo())
                 .titulo(c.getTitulo())
-                .nombreArtista(c.getNombreArtista())
+                .nombreArtista(c.getArtist()!=null?c.getArtist().getNombre():null)
                 .build();
     }
 }
