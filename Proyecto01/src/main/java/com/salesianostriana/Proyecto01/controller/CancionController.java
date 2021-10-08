@@ -7,15 +7,22 @@ import com.salesianostriana.Proyecto01.model.Artista;
 import com.salesianostriana.Proyecto01.model.Cancion;
 import com.salesianostriana.Proyecto01.repository.ArtistaRepository;
 import com.salesianostriana.Proyecto01.repository.CancionRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+@Api(tags = "CancionController")
 @RequiredArgsConstructor
 @RequestMapping("/songs")
 public class CancionController {
@@ -24,6 +31,11 @@ public class CancionController {
     private final CancionDtoConverter dtoConverter;
     private final ArtistaRepository artistaRepository;
 
+    @ApiOperation(value = "Get", notes = "este get devuelve todos los artistas que haya")
+    @ApiResponses({ @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
+            @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Error interno del servidor"),
+            @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "no autorizado"),
+            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Elemento no encontrado") })
 
     @GetMapping("/")
     public ResponseEntity<List<GetCancionDto>> findAll(){
@@ -37,6 +49,11 @@ public class CancionController {
             return ResponseEntity.ok().body(resultado);
         }
     }
+    @ApiOperation(value = "Get", notes = "este get devuelve todos los artistas que haya")
+    @ApiResponses({ @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
+            @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Error interno del servidor"),
+            @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "no autorizado"),
+            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Elemento no encontrado") })
 
     @PostMapping("/")
     public ResponseEntity <Cancion> create (@RequestBody CreateCancionDto dto) {
@@ -58,6 +75,11 @@ public class CancionController {
         }
 
     }
+    @ApiOperation(value = "Get", notes = "este get devuelve todos los artistas que haya")
+    @ApiResponses({ @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
+            @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Error interno del servidor"),
+            @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "no autorizado"),
+            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Elemento no encontrado") })
 
     @GetMapping("/{id}")
     public ResponseEntity<Cancion> findOne(@PathVariable Long id) {
@@ -68,6 +90,11 @@ public class CancionController {
     }
 
 
+    @ApiOperation(value = "Get", notes = "este get devuelve todos los artistas que haya")
+    @ApiResponses({ @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
+            @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Error interno del servidor"),
+            @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "no autorizado"),
+            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Elemento no encontrado") })
 
     @PutMapping("/{id}")
     public ResponseEntity<Cancion> edit(@RequestBody Cancion can, @PathVariable Long id){
@@ -82,6 +109,11 @@ public class CancionController {
                 })
         );
     }
+    @ApiOperation(value = "Get", notes = "este get devuelve todos los artistas que haya")
+    @ApiResponses({ @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
+            @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Error interno del servidor"),
+            @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "no autorizado"),
+            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Elemento no encontrado") })
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
