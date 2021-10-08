@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 @RestController
-@Api(tags = "PlayListController")
+@Api(tags = "Los controladores de las listas")
 @RequiredArgsConstructor
 @RequestMapping("/playlist")
 public class PlayListController {
@@ -30,11 +30,10 @@ public class PlayListController {
     private final PlaylistRepository playlistRepository;
     private final PlaylistDtoConverter dtoConverter;
     private final CancionRepository cancionRepository;
-    @ApiOperation(value = "Get", notes = "este get devuelve todos los artistas que haya")
-    @ApiResponses({ @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
-            @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Error interno del servidor"),
-            @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "no autorizado"),
-            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Elemento no encontrado") })
+    @ApiOperation(value = "Get", notes = "Obtiene todas las listas creadas")
+    @ApiResponses({
+            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Se han mostrado todas las listas"),
+            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "No se han encontrado ninguna lista") })
 
     @GetMapping("/")
     public ResponseEntity<List<Playlist>> findAll(){
@@ -113,6 +112,7 @@ public class PlayListController {
             @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Error interno del servidor"),
             @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "no autorizado"),
             @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Elemento no encontrado") })
+        @ApiResponse(code = HttpServletResponse., message = "Elemento no encontrado") })
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
@@ -172,19 +172,16 @@ public class PlayListController {
         if (playlist1 == null) {
             return ResponseEntity.notFound().build();
         } else {
-
-
-
-            return  ResponseEntity
+            return ResponseEntity
                     .ok()
-                    .body(playlist.getCanciones().stream().map(songs ->{
+                    .body(playlist1.getCanciones().stream().map(songs -> {
                         songs.getTitulo();
-                        songs.getNombreArtista();
+                        songs.getArtist().getNombre();
                         songs.getAlbum();
                         return songs;
                     }));
-                    .body(playlist1.getCanciones());
         }
+
 
     }
 
