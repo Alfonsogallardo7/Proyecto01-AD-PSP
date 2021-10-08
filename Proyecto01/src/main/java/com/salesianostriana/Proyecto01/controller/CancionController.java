@@ -48,7 +48,7 @@ public class CancionController {
 
             Cancion nuevo = dtoConverter.createCancionDtoToCanciones(dto);
 
-            nuevo.setNombreArtista(artista.getNombre());
+            nuevo.setArtist(artista);
 
             artista.addCancion(nuevo);
 
@@ -76,7 +76,7 @@ public class CancionController {
                     a.setAlbum(can.getAlbum());
                     a.setAnyo(can.getAnyo());
                     a.setTitulo(can.getTitulo());
-                    a.setNombreArtista(can.getNombreArtista());
+                    a.setArtist(can.getArtist());
                     crepository.save(a);
                     return a;
                 })
@@ -89,14 +89,25 @@ public class CancionController {
 
         List<Artista> artistas = artistaRepository.findAll();
 
-        for(Artista art : artistas){
-            if(art.getNombre().equals(crepository.getById(id).getNombreArtista()))
+        /*for(Artista art : artistas){
+            if(art.getId().equals(crepository.getById(id).getArtist().getId())) {
                 art.deleteCancion(id);
-            else
-                idArtistaEncontrado = null;
+                crepository.deleteById(id);
+                return ResponseEntity.noContent().build();
+            }
         }
-        crepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+         */
+        if(crepository.getById(id) == null) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .build();
+        }else{
+            crepository.getById(id).getArtist().deleteCancion(id);
+            crepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+
+
     }
 
 

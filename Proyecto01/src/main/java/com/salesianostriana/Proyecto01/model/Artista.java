@@ -1,6 +1,7 @@
 package com.salesianostriana.Proyecto01.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
@@ -22,7 +23,9 @@ public class Artista {
 
     private String nombre;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER,orphanRemoval = false)
+    @Column(nullable = true)
+    @JsonManagedReference
     private List<Cancion> canciones = new ArrayList<>();
 
     public void addCancion(Cancion c){
@@ -43,8 +46,9 @@ public class Artista {
     @PreRemove
     public void setArtistNull(){
         for(Cancion c: canciones){
-            c.setNombreArtista(null);
+            c.setArtist(null);
         }
+        canciones.clear();
     }
 
 

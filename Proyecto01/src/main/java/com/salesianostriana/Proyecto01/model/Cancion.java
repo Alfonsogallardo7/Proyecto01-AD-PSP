@@ -1,6 +1,7 @@
 package com.salesianostriana.Proyecto01.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,9 @@ public class Cancion {
 
     private String titulo;
 
-    private String nombreArtista;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
+    private Artista artist;
 
     private String album;
 
