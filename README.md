@@ -2,11 +2,11 @@
 
 ## **TRIANAFY**
 
-_Nuestro proyecto consiste en la implementación de una API REST para gestionar información musical, una especie de Spotify
+Nuestro proyecto consiste en la implementación de una API REST para gestionar información musical, una especie de Spotify
 
 ## MODELO :boom:
 
-!
+
 
 - ### **Artista** _Puede ser autor o grupo musical_ :microphone:
 
@@ -92,3 +92,4 @@ Podrás ver una canción que indicas por su id de una playlist que también indi
 ---
 ### **Borrar canción de playlist**
 Podrás borrar una canción de una playlist en particular siempre indicanco el id de la playlist y el id de la canción. `/list/{id1}/songs/{id2}`  _Esto no eliminará la canción de la base de datos totalmente_
+---
