@@ -35,8 +35,6 @@ public class CancionController {
     @ApiResponses({
             @ApiResponse(code = HttpServletResponse.SC_OK, message = "Se a encontrado la lista de canciones"),
             @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "No se ha encontrado la lista de canciones") })
-
-
     @GetMapping("/")
     public ResponseEntity<List<GetCancionDto>> findAll(){
         List<Cancion> data = crepository.findAll();
@@ -53,6 +51,7 @@ public class CancionController {
     @ApiResponses({
             @ApiResponse(code = HttpServletResponse.SC_OK, message = "Se ha añadido la canción"),
             @ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, message = "No se ha podido añadir la canción, algún errror en los datos") })
+    @PostMapping("/")
     public ResponseEntity <Cancion> create (@RequestBody CreateCancionDto dto) {
         if (dto.getArtistaId() == null) {
             return ResponseEntity.badRequest().build();
@@ -76,8 +75,6 @@ public class CancionController {
     @ApiResponses({
             @ApiResponse(code = HttpServletResponse.SC_OK, message = "Se a encontrado la canción"),
             @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "No se ha encontrado la canción") })
-
-    @PostMapping("/")
     @GetMapping("/{id}")
     public ResponseEntity<Cancion> findOne(@PathVariable Long id) {
 
