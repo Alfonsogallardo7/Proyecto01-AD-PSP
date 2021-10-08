@@ -117,18 +117,7 @@ public class CancionController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        Long idArtistaEncontrado;
 
-        List<Artista> artistas = artistaRepository.findAll();
-
-        /*for(Artista art : artistas){
-            if(art.getId().equals(crepository.getById(id).getArtist().getId())) {
-                art.deleteCancion(id);
-                crepository.deleteById(id);
-                return ResponseEntity.noContent().build();
-            }
-        }
-         */
         if(crepository.getById(id) == null) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
