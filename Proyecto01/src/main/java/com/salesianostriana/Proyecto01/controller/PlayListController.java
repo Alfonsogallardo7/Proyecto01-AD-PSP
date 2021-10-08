@@ -47,7 +47,10 @@ public class PlayListController {
     }
 
 
-
+    @ApiOperation(value = "Post", notes = "Crea una playlist")
+    @ApiResponses({
+            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Se ha agragado una nueva playlist"),
+            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "No se han encontrado ninguna playlist") })
     @PostMapping("/")
     public ResponseEntity <Playlist> create(@RequestBody CreatePlaylistDto dto) {
 
@@ -60,10 +63,8 @@ public class PlayListController {
 
     }
 
-    @ApiOperation(value = "Get", notes = "este get devuelve todos los artistas que haya")
+    @ApiOperation(value = "Get", notes = "este get devuelve la playlist por id")
     @ApiResponses({ @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
-            @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Error interno del servidor"),
-            @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "no autorizado"),
             @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Elemento no encontrado") })
 
 
@@ -74,10 +75,9 @@ public class PlayListController {
     }
 
 
-    @ApiOperation(value = "Get", notes = "este get devuelve todos los artistas que haya")
+    @ApiOperation(value = "Put", notes = "modifica las playlist")
     @ApiResponses({ @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
-            @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Error interno del servidor"),
-            @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "no autorizado"),
+            @ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, message = "problemas en la modificacion"),
             @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Elemento no encontrado") })
 
     @PutMapping("/{id}")
@@ -92,31 +92,25 @@ public class PlayListController {
                 })
         );
     }
-    @ApiOperation(value = "Get", notes = "este get devuelve todos los artistas que haya")
+    @ApiOperation(value = "Delete", notes = "borrara las playlist")
     @ApiResponses({ @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
-            @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Error interno del servidor"),
-            @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "no autorizado"),
-            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Elemento no encontrado") })
+            @ApiResponse(code = HttpServletResponse.SC_NO_CONTENT, message = "Elemento borrado") })
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         playlistRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
-    @ApiOperation(value = "Get", notes = "este get devuelve todos los artistas que haya")
+    @ApiOperation(value = "Get", notes = "ver la cancion elegida en una playlist existente elegida")
     @ApiResponses({ @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
-            @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Error interno del servidor"),
-            @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "no autorizado"),
             @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Elemento no encontrado") })
 
     @GetMapping("/{id}/songs/{id}")
     public ResponseEntity<Cancion> buscarCancionPlaylist(@PathVariable Long idplaylist, @PathVariable Long idcancion){
         return ResponseEntity.of(cancionRepository.findById(idcancion));
     }
-    @ApiOperation(value = "Get", notes = "este get devuelve todos los artistas que haya")
+    @ApiOperation(value = "Post", notes = "este post añade una cancion existente a una lista de reproduccion")
     @ApiResponses({ @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
-            @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Error interno del servidor"),
-            @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "no autorizado"),
             @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Elemento no encontrado") })
 
     @PostMapping("/{idPlaylist}/songs/{idCancion}")
@@ -137,10 +131,8 @@ public class PlayListController {
 
     }
 
-    @ApiOperation(value = "Get", notes = "este get devuelve todos los artistas que haya")
+    @ApiOperation(value = "Get", notes = "Muestra todas las canciones de una playlist existente")
     @ApiResponses({ @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
-            @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Error interno del servidor"),
-            @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "no autorizado"),
             @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Elemento no encontrado") })
 
     @GetMapping("{id}/songs/")
